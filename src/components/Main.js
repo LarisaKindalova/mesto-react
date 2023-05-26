@@ -2,7 +2,12 @@ import React from "react";
 import api from "../utils/api";
 import Card from "./Card";
 
-export default function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
+export default function Main({
+  onEditAvatar,
+  onEditProfile,
+  onAddPlace,
+  onCardClick,
+}) {
   const [userName, setUserName] = React.useState("");
   const [userDescription, setUserDescription] = React.useState("");
   const [userAvatar, setUserAvatar] = React.useState("");
@@ -50,7 +55,7 @@ export default function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardCl
       </section>
       <section className="cards" aria-label="Фотогалерея">
         <ul className="cards__list">
-          {cards.map((card) => (
+          {cards.map(card => (
             <Card key={card._id} card={card} onCardClick={onCardClick} />
           ))}
         </ul>

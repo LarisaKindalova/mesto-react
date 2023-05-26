@@ -6,43 +6,45 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
 export default function App() {
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
+    React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
+    React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
 
-  function handleCardClick (card) {
+  function handleCardClick(card) {
     setSelectedCard(card);
     setIsImagePopupOpen(true);
   }
 
   function handleEditAvatarClick() {
-    setIsEditAvatarPopupOpen (true);
+    setIsEditAvatarPopupOpen(true);
   }
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
   }
   function handleAddPlaceClick() {
-    setIsAddPlacePopupOpen (true);
+    setIsAddPlacePopupOpen(true);
   }
 
-  function closeAllPopups () {
+  function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-    setIsAddPlacePopupOpen(false); 
-    setIsImagePopupOpen(false)
+    setIsAddPlacePopupOpen(false);
+    setIsImagePopupOpen(false);
     // setSelectedCard ({});
   }
 
   return (
     <div className="page">
       <Header />
-      <Main 
-      onEditAvatar = {handleEditAvatarClick}
-      onEditProfile = {handleEditProfileClick}
-      onAddPlace = {handleAddPlaceClick}
-      onCardClick={handleCardClick}
+      <Main
+        onEditAvatar={handleEditAvatarClick}
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
+        onCardClick={handleCardClick}
       />
 
       <Footer />
@@ -52,7 +54,7 @@ export default function App() {
         title="Обновить аватар"
         buttonText="Сохранить"
         isOpen={isEditAvatarPopupOpen}
-        onClose ={closeAllPopups}     
+        onClose={closeAllPopups}
       >
         <input
           required=""
@@ -74,7 +76,7 @@ export default function App() {
         title="Редактировать профиль"
         buttonText="Сохранить"
         isOpen={isEditProfilePopupOpen}
-        onClose ={closeAllPopups} 
+        onClose={closeAllPopups}
       >
         <input
           required=""
@@ -85,7 +87,6 @@ export default function App() {
           type="text"
           name="name"
           placeholder="Введите имя"
-        
         />
         <span className="popup__input-error username-input-error" />
         <input
@@ -102,12 +103,13 @@ export default function App() {
       </PopupWithForm>
 
       {/* Попап добавление фотографии */}
-      <PopupWithForm 
-      name="add-card" 
-      title="Новое место" 
-      buttonText="Создать"
-      isOpen={isAddPlacePopupOpen}
-      onClose ={closeAllPopups} >
+      <PopupWithForm
+        name="add-card"
+        title="Новое место"
+        buttonText="Создать"
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+      >
         <input
           required=""
           minLength={2}
@@ -132,12 +134,10 @@ export default function App() {
 
       {/* Попап фотографии */}
       <ImagePopup
-      card={selectedCard}
-      isOpen ={isImagePopupOpen}
-      onClose={closeAllPopups}
+        card={selectedCard}
+        isOpen={isImagePopupOpen}
+        onClose={closeAllPopups}
       />
-
     </div>
   );
 }
-
