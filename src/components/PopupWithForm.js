@@ -7,9 +7,12 @@ export default function PopupWithForm({
   isOpen,
   onClose,
   buttonText,
+  onSubmit,
+  onMouseDown
 }) {
   return (
-    <div className={`popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`}>
+    <div className={`popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`}
+    onMouseDown={onMouseDown}>
       <div className="popup__container">
         <button
           onClick={onClose}
@@ -25,8 +28,9 @@ export default function PopupWithForm({
           {children}
           <button
             type="submit"
-            className="popup__submit-button popup__submit-button_disabled"
+            className="popup__submit-button"
             aria-label="кнопка сохранить"
+            onClick = {onSubmit}
           >
             {buttonText}
           </button>
