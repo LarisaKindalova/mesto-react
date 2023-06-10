@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 
 export default function PopupWithForm({
   title,
@@ -10,6 +11,18 @@ export default function PopupWithForm({
   onSubmit,
   onMouseDown
 }) {
+  
+  useEffect(() => {
+    if (!isOpen) return;
+
+    function handleEscClose(evt) {
+      evt.key === "Escape" && onClose();
+    }
+    
+    document.addEventListener("keydown", handleEscClose);
+    return () => document.removeEventListener("keydown", handleEscClose);
+  }, [isOpen]);
+
   return (
     <div className={`popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`}
     onMouseDown={onMouseDown}>
@@ -23,7 +36,6 @@ export default function PopupWithForm({
         <form
           className={`popup__form popup__form_${name}`}
           name={`popup__${name}`}
-          noValidate=""
         >
           {children}
           <button

@@ -2,7 +2,6 @@ import React from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
@@ -34,18 +33,9 @@ export default function App() {
       .catch(err => console.log(`Ошибка: ${err}`));
   }, []);
 
-  function handleEscClose(evt) {
-    evt.key === "Escape" && closeAllPopups();
-  }
-
   function handleOverlayClose(evt) {
     evt.target === evt.currentTarget && closeAllPopups();
   }
-
-  useEffect(() => {
-    document.addEventListener("keydown", handleEscClose);
-    return () => document.removeEventListener("keydown", handleEscClose);
-  }, []);
 
   function handleCardClick(card) {
     setSelectedCard(card);

@@ -2,38 +2,43 @@ import React from "react";
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-export default function EditProfilePopup({ isOpen, onClose, onMouseDown, onUpdateUser, isLoading }) {
-  const [name, setName] = React.useState("");
-  const [description, setDescription] = React.useState("");
+export default function EditProfilePopup({
+  isOpen,
+  onClose,
+  onMouseDown,
+  onUpdateUser,
+  isLoading,
+}) {
+  const [values, setValues] = React.useState({});
   const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
-  }, [currentUser]);
+    setValues({
+      name: currentUser.name,
+      about: currentUser.about,
+    });
+  }, [currentUser, isOpen]);
 
-  function handleChangeName(evt) {
-    setName(evt.target.value);
-  }
-
-  function handleChangeAbout(evt) {
-    setDescription(evt.target.value);
+  function handleChangeValues(evt) {
+    const { name, value } = evt.target;
+    setValues(prev => ({
+      ...prev,
+      [name]: value,
+    }));
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    onUpdateUser({
-        name,
-        about: description,
-      });
+    onUpdateUser(values);
+    setValues({ [evt.target.name]: "" });
   }
 
   return (
     <PopupWithForm
       name="profile"
       title="Редактировать профиль"
-      buttonText={isLoading ? "Сохранение..." :"Сохранить"}
+      buttonText={isLoading ? "Сохранение..." : "Сохранить"}
       isOpen={isOpen}
       onClose={onClose}
       onMouseDown={onMouseDown}
@@ -48,8 +53,8 @@ export default function EditProfilePopup({ isOpen, onClose, onMouseDown, onUpdat
         type="text"
         name="name"
         placeholder="Введите имя"
-        value={name || ''}
-        onChange={handleChangeName}
+        value={values.name || ""}
+        onChange={handleChangeValues}
       />
       <span className="popup__input-error username-input-error" />
       <input
@@ -60,9 +65,9 @@ export default function EditProfilePopup({ isOpen, onClose, onMouseDown, onUpdat
         id="job-input"
         type="text"
         name="about"
-        value={description || ''}
+        value={values.about || ""}
         placeholder="Введите род занятий"
-        onChange={handleChangeAbout}
+        onChange={handleChangeValues}
       />
       <span className="popup__input-error job-input-error" />
     </PopupWithForm>
